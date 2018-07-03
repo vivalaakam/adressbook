@@ -1,0 +1,99 @@
+$main-color: #474f60;
+
+.Form {
+  width: 768px;
+  margin: 0 auto;
+  font-size: 18px;
+}
+
+.item {
+  margin: 0 5px;
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 15px;
+    text-align: left;
+    margin-bottom: 5px;
+    color: scale-color($main-color, $lightness: 25%);
+  }
+
+  .input {
+    line-height: 24px;
+    height: 24px;
+    padding: 5px;
+    border: 1px solid scale-color($main-color, $lightness: 50%);
+    border-radius: 5px;
+    display: block;
+    flex: 1 0 0;
+    font-size: 18px;
+    margin: 0;
+
+    &:focus {
+      outline: none;
+      border-color: $main-color;
+    }
+
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder,
+    &::input-placeholder {
+      font-style: italic;
+      font-weight: 300;
+      color: scale-color($main-color, $lightness: 50%);
+    }
+  }
+}
+
+.row {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.item {
+  margin: 0 5px;
+}
+
+.day, .year {
+  margin: 0 5px;
+  flex: 1 0 0;
+
+  &:first-child {
+    margin-left: 0px;
+  }
+
+  &:last-child {
+    margin-right: 0px;
+  }
+}
+
+.month {
+  margin: 0 5px;
+  flex: 2 0 0;
+}
+
+.button {
+  flex: 1 0 0;
+  line-height: 24px;
+  font-size: 18px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, .12), 0 1px 11px 0 rgba(0, 0, 0, .24);
+  padding: 5px 15px;
+  margin: 0px 5px;
+  vertical-align: top;
+
+  border: 1px solid $main-color;
+  background-color: $main-color;
+  color: #fff;
+
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: scale-color($main-color, $lightness: 85%);
+    color: $main-color;
+  }
+
+}

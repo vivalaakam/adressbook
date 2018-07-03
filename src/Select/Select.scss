@@ -1,0 +1,93 @@
+$main-color: #474f60;
+
+.Select {
+  position: relative;
+  font-size: 18px;
+  text-align: left;
+}
+
+.active {
+  .wrapper, .list {
+    border-color: $main-color;
+  }
+
+  .wrapper {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+    &:after {
+      transform: scaleY(-0.5);
+    }
+  }
+
+  .list {
+    border-top-color: scale-color($main-color, $lightness: 75%)
+  }
+}
+
+.wrapper {
+  line-height: 24px;
+  height: 24px;
+  padding: 5px;
+  border: 1px solid scale-color($main-color, $lightness: 50%);
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 1;
+
+  &:after {
+    content: '\25BC';
+    position: absolute;
+    right: 6px;
+    top: 7px;
+    font-size: 15px;
+    transform: scaleY(.5);
+    color: $main-color;
+  }
+}
+
+.placeholder {
+  color: scale-color($main-color, $lightness: 25%);
+}
+
+.value {
+  color: $main-color;
+}
+
+.list {
+  z-index: 99;
+  position: absolute;
+  top: 33px;
+  left: 0;
+  right: 0;
+  min-height: 34px;
+  border-top: 1px solid scale-color($main-color, $lightness: 75%);
+  border-left: 1px solid scale-color($main-color, $lightness: 50%);
+  border-right: 1px solid scale-color($main-color, $lightness: 50%);
+  border-bottom: 1px solid scale-color($main-color, $lightness: 50%);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: #fff;
+  max-height: 340px;
+  overflow: scroll;
+
+}
+
+.listItem {
+  padding: 5px;
+  line-height: 24px;
+  color: $main-color;
+
+  &:hover {
+    cursor: pointer;
+    background-color: scale-color($main-color, $lightness: 85%);
+  }
+}
+
+.back {
+  z-index: 98;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
