@@ -3,17 +3,14 @@
  *
  * @flow
  */
-
+import { Link, Route, Switch } from 'react-router-dom'
 import React, { PureComponent } from 'react'
-import { Link } from 'react-router-dom'
 import styles from './Home.scss'
+import Form from '../Form/Form'
 
 export default class Home extends PureComponent {
   constructor(props) {
     super(props)
-
-    console.log(props)
-
     const json = localStorage.getItem('addressbook') || '{}'
     this.state = {
       contacts: Object.values(JSON.parse(json))
@@ -22,6 +19,23 @@ export default class Home extends PureComponent {
 
   onClick = (contact) => () => {
     this.props.history.push(`/${contact.id}`)
+  }
+
+  onRemove = (contact) => (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const remove = confirm(`Удалить ${contact.name}`) // eslint-disable-line
+
+    if (remove) {
+      const json = localStorage.getItem('addressbook') || '{}'
+      const c = JSON.parse(json)
+      delete c[contact.id]
+      this.setState({
+        contacts: Object.values(c)
+      }, () => {
+        localStorage.setItem('addressbook', JSON.stringify(c))
+      })
+    }
   }
 
   render() {
@@ -34,6 +48,7 @@ export default class Home extends PureComponent {
           <tr>
             <th>ФИО</th>
             <th>Телефон</th>
+            <th></th>
           </tr>
           </thead>
           <tbody>
@@ -52,6 +67,9 @@ export default class Home extends PureComponent {
         </td>
         <td>
           {contact.phone}
+        </td>
+        <td>
+          <button onClick={this.onRemove(contact)} className={styles.button}>Удалить</button>
         </td>
       </tr>
     ))

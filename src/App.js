@@ -10,8 +10,8 @@ export default class App extends Component {
       <div className={styles.App}>
         <Router>
           <div>
+            <Route exact path="/*" component={Home} />
             <Switch>
-              <Route exact path="/" component={Home} />
               <Route path="/new" component={Form} />
               <Route path="/:id" component={Form} />
             </Switch>
