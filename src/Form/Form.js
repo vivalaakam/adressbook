@@ -3,6 +3,7 @@
  *
  * @flow
  */
+import uuidv4 from 'uuid/v4'
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import Select from '../Select/Select'
@@ -17,8 +18,35 @@ const birthDMonths = [
 
 
 export default class Form extends PureComponent {
+  constructor(props) {
+    super(props)
+    console.log(props.match)
+    if (props.match.params && props.match.params.id) {
+      try {
+        const json = localStorage.getItem('addressbook') || '{}'
+        const c = JSON.parse(json)
+
+        this.state = c[props.match.params.id]
+
+      } catch (e) {
+        this.state = {
+          name: '',
+          address: '',
+          city: '',
+          phone: '',
+          birthDay: '',
+          birthMonth: '',
+          birthYear: ''
+        }
+      }
+    }
+
+    console.log(this.state)
+  }
+
+
   state = {
-    user: '',
+    name: '',
     address: '',
     city: '',
     phone: '',
@@ -27,8 +55,8 @@ export default class Form extends PureComponent {
     birthYear: ''
   }
 
-  onUser = (e) => {
-    this.setState({ user: e.target.value })
+  onName = (e) => {
+    this.setState({ name: e.target.value })
   }
 
   onAddress = (e) => {
@@ -57,17 +85,29 @@ export default class Form extends PureComponent {
 
   onSubmit = (e) => {
     e.preventDefault()
+
+    const json = localStorage.getItem('addressbook') || '{}'
+    const storage = JSON.parse(json)
+
+    const id = this.state.id || uuidv4()
+
+    storage[id] = Object.assign({}, this.state, { id })
+
+    localStorage.setItem('addressbook', JSON.stringify(storage))
+    if (!this.state.id) {
+      this.props.history.push(`/${id}`)
+    }
   }
 
   render() {
-    return [
-      <h2 key="title">Form</h2>,
-      <Link key="link" to="/">На главную</Link>,
+    return [,
       <form key="form" onSubmit={this.onSubmit} className={styles.Form}>
+        <h2 key="title">Form</h2>
+        <Link key="link" to="/">На главную</Link>
         <div className={styles.row}>
           <div className={styles.item}>
             <label htmlFor="name">Фамилия Имя Отчество</label>
-            <input type="text" name="name" id="name" onChange={this.onUser} value={this.state.user}
+            <input type="text" name="name" id="name" onChange={this.onName} value={this.state.name}
                    className={styles.input}
                    placeholder="ФИО" />
           </div>

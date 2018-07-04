@@ -1,0 +1,45 @@
+$main-color: #474f60;
+
+.Home {
+  width: 768px;
+  margin: 0 auto;
+}
+
+.contacts {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  td, th {
+    padding: 5px;
+    color: $main-color;
+  }
+
+  thead {
+    th:nth-child(1) {
+      width: 30%;
+    }
+
+    th:nth-child(2) {
+      width: 10%;
+    }
+
+    th {
+      border-bottom: 2px solid scale-color($main-color, $lightness: 50%);
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        border-bottom: 1px solid scale-color($main-color, $lightness: 50%);
+      }
+
+      &:hover td {
+        cursor: pointer;
+        background-color: scale-color($main-color, $lightness: 85%);
+      }
+    }
+  }
+}

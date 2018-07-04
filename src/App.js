@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import styles from './App.scss'
-import Home from './Home'
+import Home from './Home/Home'
 import Form from './Form/Form'
 
 export default class App extends Component {
@@ -10,8 +10,11 @@ export default class App extends Component {
       <div className={styles.App}>
         <Router>
           <div>
-            <Route exact path="/" component={Home} />
-            <Route path="/new" component={Form} />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/new" component={Form} />
+              <Route path="/:id" component={Form} />
+            </Switch>
           </div>
         </Router>
       </div>
