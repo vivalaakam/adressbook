@@ -14,6 +14,7 @@ $main-color: #474f60;
   flex: 1 0 0;
   display: flex;
   flex-direction: column;
+  position: relative;
 
   label {
     font-size: 15px;
@@ -32,6 +33,7 @@ $main-color: #474f60;
     flex: 1 0 0;
     font-size: 18px;
     margin: 0;
+    margin-bottom: 20px;
 
     &:focus {
       outline: none;
@@ -44,6 +46,23 @@ $main-color: #474f60;
       font-style: italic;
       font-weight: 300;
       color: scale-color($main-color, $lightness: 50%);
+    }
+  }
+
+  &.error {
+    .input {
+      border-color: #DC4E41;;
+      & + span {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        font-size: 14px;
+        line-height: 18px;
+        color: #DC4E41;
+        &:empty {
+          display: none;
+        }
+      }
     }
   }
 }

@@ -3,10 +3,9 @@
  *
  * @flow
  */
-import { Link, Route, Switch } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import React, { PureComponent } from 'react'
 import styles from './Home.scss'
-import Form from '../Form/Form'
 
 export default class Home extends PureComponent {
   constructor(props) {

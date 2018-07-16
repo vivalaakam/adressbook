@@ -3,6 +3,7 @@
  *
  * @flow
  */
+import classnames from 'classnames'
 import uuidv4 from 'uuid/v4'
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
@@ -32,9 +33,11 @@ export default class Form extends PureComponent {
       } catch (e) {
         this.state = {
           name: '',
+          nameError: '',
           address: '',
           city: '',
           phone: '',
+          phoneError: '',
           birthDay: '',
           birthMonth: '',
           birthYear: ''
@@ -48,16 +51,38 @@ export default class Form extends PureComponent {
 
   state = {
     name: '',
+    nameError: '',
     address: '',
     city: '',
     phone: '',
+    phoneError: '',
     birthDay: '',
     birthMonth: '',
     birthYear: ''
   }
 
   onName = (e) => {
-    this.setState({ name: e.target.value })
+    this.setState({ name: e.target.value, nameError: '' })
+  }
+
+  onBlurName = () => {
+    this.setState((state) => {
+      if (state.name.length === 0) {
+        return {
+          nameError: 'Поле не может быть пустым'
+        }
+      }
+
+      if (state.name.length >= 100) {
+        return {
+          nameError: 'Поле слишком длинное'
+        }
+      }
+
+      return {
+        nameError: ''
+      }
+    })
   }
 
   onAddress = (e) => {
@@ -69,7 +94,29 @@ export default class Form extends PureComponent {
   }
 
   onPhone = (e) => {
-    this.setState({ phone: e.target.value })
+    this.setState({ phone: e.target.value, phoneError: '' })
+  }
+
+  onBlurPhone = () => {
+    this.setState((state) => {
+      if (state.phone.length === 0) {
+        return {
+          phoneError: 'Поле не может быть пустым'
+        }
+      }
+
+      const phone = String(state.phone).replace(/\D/g, '')
+
+      if (!(/^((7|8)+([0-9]){10})$/gm.test(phone))) {
+        return {
+          phoneError: 'Только российские номера'
+        }
+      }
+
+      return {
+        phoneError: ''
+      }
+    })
   }
 
   onBirthDay = (value) => {
@@ -107,15 +154,23 @@ export default class Form extends PureComponent {
   render() {
     return (
       <Modal onReject={this.onRejectModal} className={styles.Form}>
-        <form key="form" onSubmit={this.onSubmit}>
+        <form key="form" onSubmit={this.onSubmit} autoComplete="false">
           <h2 key="title">Form</h2>
           <Link key="link" to="/">На главную</Link>
           <div className={styles.row}>
-            <div className={styles.item}>
+            <div className={classnames(styles.item, { [styles.error]: !!this.state.nameError })}>
               <label htmlFor="name">Фамилия Имя Отчество</label>
-              <input type="text" name="name" id="name" onChange={this.onName} value={this.state.name}
-                     className={styles.input}
-                     placeholder="ФИО" />
+              <input
+                maxLength="100"
+                type="text"
+                name="name"
+                id="name"
+                onChange={this.onName} value={this.state.name}
+                className={styles.input}
+                placeholder="ФИО"
+                onBlur={this.onBlurName}
+              />
+              <span>{this.state.nameError}</span>
             </div>
           </div>
           <div className={styles.row}>
@@ -136,11 +191,19 @@ export default class Form extends PureComponent {
           </div>
 
           <div className={styles.row}>
-            <div className={styles.item}>
+            <div className={classnames(styles.item, { [styles.error]: !!this.state.phoneError })}>
               <label htmlFor="phone">Телефон</label>
-              <input type="number" name="phone" id="phone" onChange={this.onPhone} value={this.state.phone}
-                     placeholder="Телефон"
-                     className={styles.input} />
+              <input
+                type="number"
+                name="phone"
+                id="phone"
+                onChange={this.onPhone}
+                value={this.state.phone}
+                placeholder="Телефон"
+                onBlur={this.onBlurPhone}
+                className={styles.input}
+              />
+              <span>{this.state.phoneError}</span>
             </div>
           </div>
           <div className={styles.row}>
